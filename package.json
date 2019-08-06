@@ -1,0 +1,16 @@
+{
+  "name": "clientside-ml",
+  "version": "1.0.0",
+  "description": "Simple web client backed by CNN model for image classification",
+  "main": "index.js",
+  "repository": "https://github.com/SrMoffat/clientside-ml.git",
+  "author": "4fr0c0d3 <ngigemoffat@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon server/index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  }
+}
