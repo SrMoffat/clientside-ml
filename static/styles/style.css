@@ -1,0 +1,61 @@
+#logo-wrapper {
+    position: relative;
+    top: -0.4em;
+    left: 0.4em;
+}
+.app-container {
+    background-color: rgb(245, 245, 245);
+    height: 100vh;
+    margin-top: 0;
+}
+
+.model-picker {
+    display: block;
+    margin-top: .4em;
+}
+
+#image-select {
+    outline: none;
+    user-select: none;
+}
+
+.file-select {
+    width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+    z-index: -1;
+}
+
+.file-select + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: #01502D;
+    display: inline-block;
+    padding: 0.5em;
+    border-radius: 0.2em;
+    margin: 6em 0 0 9em;
+}
+
+.file-select:focus + label,
+.file-select + label:hover {
+    background: rgb(2, 138, 77);
+}
+
+.file-select + label {
+    cursor: pointer;
+}
+
+#selected-image {
+    background-position: center;
+    height: 100%;
+    width: 100%;
+}
+
+.selected-image {
+    border: solid 1px rgb(223, 236, 243);
+    height: 30%;
+    position: relative;
+}

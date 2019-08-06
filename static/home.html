@@ -4,9 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link href="./materialize/css/materialize.css" rel="stylesheet">
+    <link href="./styles/style.css" rel="stylesheet">
+
     <title>ML-Client</title>
 </head>
-<body>
-    <h1>ML Client</h1>
+<body class="container">
+    <nav id="nav" class="nav-extended navigation-bar">
+        <div class="nav-wrapper" id="logo-wrapper">
+            <a href="home.html" class="brand-logo logo">𝖕𝖎𝖖</a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="train.html">Train</a></li>
+                    <li><a href="train.html">Logout</a></li>
+                </ul>
+        </div>
+    </nav>
+    <div id="model-load-progress" class="progress">
+        <div class="determinate" style="width: 30%"></div>
+    </div>
+    <div class="app-container row">
+        <div class="image-picker col s6" id="image-picker" style="height: 50%;">
+
+            <div class="model-picker">
+                <select id="model-picker" class="model-picker">
+                    <option disabled selected>Select Model</option>
+                    <option>MobileNet</option>
+                    <option disabled>VGG16</option>
+                </select>
+
+                <input id="image-select" type="file" class="file-select">
+                <label for="image-select"> Pick an Image </label>
+            </div>
+
+        </div>
+
+        <div class="selected-image col s6" style="height: 50%;">
+            <img id="selected-image" src="" alt="img">
+            <!-- <button class="predict-button" id="predict-button">?</button> -->
+        </div>
+        <div class="predictions col s12" id="predictions" style="background-color: green; height: 100%;"></div>
+    </div>
 </body>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.10.0"></script>
+<script src="predict.js"></script>
 </html>

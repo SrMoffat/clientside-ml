@@ -4,9 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Train</title>
+
+    <link href="./materialize/css/materialize.css" rel="stylesheet">
+    <link href="./styles/style.css" rel="stylesheet">
+    <title>ML-Client | Train </title>
 </head>
-<body>
-    <h1>Train</h1>
+<body class="container">
+    <nav id="nav" class="nav-extended navigation-bar">
+        <div id="logo-wrapper" class="nav-wrapper">
+            <a href="home.html" class="brand-logo logo">𝖕𝖎𝖖</a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="train.html">Logout</a></li>
+                </ul>
+        </div>
+    </nav>
+    <div class="progress" id="progress-bar">
+        <div class="determinate" style="width: 70%"></div>
+    </div>
+    <div class="app-container row">
+        <div class="image-picker col s6" id="image-picker" style="background-color: red; height: 50%;"></div>
+        <div class="image-display col s6" id="image-display" style="background-color: blue; height: 50%;"></div>
+        <div class="predictions col s12" id="predictions" style="background-color: green; height: 100%;"></div>
+    </div>
 </body>
 </html>
