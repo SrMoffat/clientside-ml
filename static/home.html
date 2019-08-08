@@ -21,10 +21,10 @@
         </div>
     </nav>
     <div id="model-load-progress" class="progress">
-        <div class="determinate" style="width: 30%"></div>
+        <div class="indeterminate" style="width: 30%"></div>
     </div>
     <div class="app-container row">
-        <div class="image-picker col s6" id="image-picker" style="height: 50%;">
+        <div class="image-picker col s6" id="image-picker" style="height: 35%;">
 
             <div class="model-picker">
                 <select id="model-picker" class="model-picker">
@@ -39,14 +39,20 @@
 
         </div>
 
-        <div class="selected-image col s6" style="height: 50%;">
+        <div class="selected-image col s6" style="height: 35%;">
             <img id="selected-image" src="" alt="img">
             <!-- <button class="predict-button" id="predict-button">?</button> -->
         </div>
-        <div class="predictions col s12" id="predictions" style="background-color: green; height: 100%;"></div>
+        <div class="row">
+            <div class="col">
+                <p class="ml-3">Predictions</p>
+                <ol id="prediction-list"><li>One</li></ol>
+            </div>
+        </div>
     </div>
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.10.0"></script>
+<script src="imagenetClasses.js"></script>
 <script src="predict.js"></script>
 </html>
