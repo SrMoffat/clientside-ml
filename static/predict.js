@@ -15,27 +15,35 @@ const tensor = tf.fromPixels(selectedImage)
 
 const loadTfModel = async () => {
     model = await tf.loadModel('https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.25_224/model.json');
-    progressBar.style.display = 'none';
-
+    
     predictions = await model.predict(tensor).data();
-
+    
     top5Predictions = Array.from(predictions)
                             .map((probability, index) => {
                                 return {
                                     probability,
-                                    classname: IMAGENET[index]
+                                    prediction: IMAGENET[index]
                                 }
                             })
                             .sort((a, b) => {
                                 return b.probability - a.probability
                             })
                             .slice(0, 5);
+    
+    progressBar.style.display = 'none';
+    modelPredictions.innerHTML = '';
 
+    top5Predictions.forEach(pred => {
+        const { prediction, probability } = pred;
 
-    // console.log('MODEL', model);
-    // console.log('PREDICTION', predictions);
-    console.log('T5PREDICTION', top5Predictions);
+        const predictionText = `${prediction} : ${probability.toFixed(6)}`;
 
+        let listItem = document.createElement('li');
+
+        listItem.innerHTML = predictionText;
+
+        modelPredictions.appendChild(listItem);
+    });
 }
 
 imagePicker.addEventListener('change', (e) => {
@@ -51,6 +59,10 @@ imagePicker.addEventListener('change', (e) => {
     }
 
     reader.readAsDataURL(files[0]);
+});
+
+imagePicker.addEventListener('click', () => {
+    progressBar.style.display = 'block';
 });
 
 
