@@ -2,7 +2,12 @@ const progressBar = document.getElementById('model-load-progress');
 const modelPicker = document.getElementById('model-picker');
 const imagePicker = document.getElementById('image-select');
 const selectedImage = document.getElementById('selected-image');
-const modelPredictions = document.getElementById('prediction-list');
+// const modelPredictions = document.getElementById('prediction-list');
+const canvas = document.getElementById('predictions-chart');
+const context = canvas.getContext('2d');
+
+const chartBackground = 'rgb(1, 84, 49)';
+const borderColor = 'rgb(0, 75, 40)';
 
 let model;
 let predictions;
@@ -13,11 +18,13 @@ const tensor = tf.fromPixels(selectedImage)
                 .toFloat()
                 .expandDims();
 
-const loadTfModel = async () => {
-    model = await tf.loadModel('https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.25_224/model.json');
-    
-    predictions = await model.predict(tensor).data();
-    
+const createElem = (elem) => {
+    return document.createElement(elem);
+}
+
+
+
+const preparePredictions = (predictions, count) => {
     top5Predictions = Array.from(predictions)
                             .map((probability, index) => {
                                 return {
@@ -28,22 +35,45 @@ const loadTfModel = async () => {
                             .sort((a, b) => {
                                 return b.probability - a.probability
                             })
-                            .slice(0, 5);
+                            .slice(0, count);
+
+    return top5Predictions;
+}
+
+const getLabels = (predictions) => {
+
+    return predictions.map(({ prediction }) => {
+        return prediction;
+    });
+}
+
+const createPredictionsChart = (predictions) => {
+    console.log(predictions.map(({ probability }) => (probability)))
+
+    const chart = new Chart(context, {
+        type: 'radar',
+        data: {
+            labels: getLabels(predictions),
+            datasets: [{
+                label: 'Predictions',
+                backgroundColor: `${chartBackground}`,
+                borderColor: `${borderColor}`,
+                data: predictions.map(({ probability }) => (probability*100))
+            }]
+        },
+        options: {}
+    });
+}
+
+const loadTfModel = async () => {
+    model = await tf.loadModel('https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.25_224/model.json');
+    
+    predictions = await model.predict(tensor).data();
+
+    createPredictionsChart(preparePredictions(predictions, 5));
     
     progressBar.style.display = 'none';
-    modelPredictions.innerHTML = '';
-
-    top5Predictions.forEach(pred => {
-        const { prediction, probability } = pred;
-
-        const predictionText = `${prediction} : ${probability.toFixed(6)}`;
-
-        let listItem = document.createElement('li');
-
-        listItem.innerHTML = predictionText;
-
-        modelPredictions.appendChild(listItem);
-    });
+    // modelPredictions.innerHTML = '';
 }
 
 imagePicker.addEventListener('change', (e) => {
@@ -51,11 +81,11 @@ imagePicker.addEventListener('change', (e) => {
 
     const { target: { files } } = e;
 
-    let reader = new FileReader();
+    const reader = new FileReader();
 
     reader.onload = () => {
         selectedImage.setAttribute('src', reader.result);
-        modelPredictions.innerHTML = '';
+        // modelPredictions.innerHTML = '';
     }
 
     reader.readAsDataURL(files[0]);
